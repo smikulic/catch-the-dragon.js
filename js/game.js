@@ -34,6 +34,10 @@
 
     draw: function(screen) {
       screen.clearRect(0, 0, this.size.x, this.size.y);
+      var bgImage = new Image();
+      bgImage.src = "images/bg.png";
+      screen.drawImage(bgImage, 0, 0);
+
       for (var i = 0; i < this.bodies.length; i++) {
         this.bodies[i].draw(screen);
       }
@@ -102,7 +106,9 @@
 
   Dragon.prototype = {
     draw: function(screen) {
-      drawRect(screen, this, "red");
+      var dragonImage = new Image();
+      dragonImage.src = "images/panda.png";
+      screen.drawImage(dragonImage, this.center.x - this.size.x / 2, this.center.y - this.size.y / 2);
     },
 
     collision: function(otherBody) {
@@ -116,7 +122,7 @@
     this.game = game;
     this.center = { x: this.game.center.x, y: this.game.center.y };
     this.direction = { x: 1, y: 0 };
-    this.size = { x: BLOCK_SIZE, y: BLOCK_SIZE };
+    this.size = { x: BLOCK_SIZE * 1.5, y: BLOCK_SIZE * 1.5 };
     this.score = 0;
     this.blocks = [];
 
@@ -130,13 +136,15 @@
 
       var now = new Date().getTime();
       if (now > this.lastMove + 100) {
-        this.move();
+        this.move(this.score + 1);
         this.lastMove = now;
       }
     },
 
     draw: function(screen) {
-      drawRect(screen, this, "black");
+      var playerImage = new Image();
+      playerImage.src = "images/player.gif";
+      screen.drawImage(playerImage, this.center.x - this.size.x / 2, this.center.y - this.size.y / 2);
     },
 
     collision: function(otherBody) {
@@ -170,9 +178,9 @@
       }
     },
 
-    move: function() {
-      this.center.x += this.direction.x * BLOCK_SIZE;
-      this.center.y += this.direction.y * BLOCK_SIZE;
+    move: function(level) {
+      this.center.x += this.direction.x * BLOCK_SIZE * (level / 2);
+      this.center.y += this.direction.y * BLOCK_SIZE * (level / 2);
     },
 
     eat: function() {
@@ -241,20 +249,20 @@
   var createWalls = function(game) {
     var walls = [];
     walls.push(new WallBlock(game,
-                             { x: game.center.x, y: BLOCK_SIZE },
-                             { x: game.size.x, y: BLOCK_SIZE / 2 })); // top
+                             { x: game.center.x, y: BLOCK_SIZE / 8 },
+                             { x: game.size.x, y: BLOCK_SIZE / 4 })); // top
 
     walls.push(new WallBlock(game,
-                             { x: game.size.x - BLOCK_SIZE / 4, y: game.center.y },
-                             { x: BLOCK_SIZE / 2, y: game.size.y - BLOCK_SIZE * 2 })); // right
+                             { x: game.size.x - BLOCK_SIZE / 8, y: game.center.y },
+                             { x: BLOCK_SIZE / 2, y: game.size.y - BLOCK_SIZE * 0.25 })); // right
 
     walls.push(new WallBlock(game,
-                             { x: game.center.x, y: game.size.y - BLOCK_SIZE },
-                             { x: game.size.x, y: BLOCK_SIZE / 2 })); // bottom
+                             { x: game.center.x, y: game.size.y - BLOCK_SIZE / 8 },
+                             { x: game.size.x, y: BLOCK_SIZE / 4 })); // bottom
 
     walls.push(new WallBlock(game,
-                             { x: BLOCK_SIZE / 4, y: game.center.y },
-                             { x: BLOCK_SIZE / 2, y: game.size.y - BLOCK_SIZE * 2 })); // left
+                             { x: BLOCK_SIZE / 8, y: game.center.y },
+                             { x: BLOCK_SIZE / 2, y: game.size.y - BLOCK_SIZE * 0.25 })); // left
     return walls;
   };
 
