@@ -135,7 +135,7 @@
       this.handleKeyboard();
 
       var now = new Date().getTime();
-      if (now > this.lastMove + 100) {
+      if (now > this.lastMove + 10) {
         this.move(this.score + 1);
         this.lastMove = now;
       }
@@ -179,8 +179,8 @@
     },
 
     move: function(level) {
-      this.center.x += this.direction.x * BLOCK_SIZE * (level / 2);
-      this.center.y += this.direction.y * BLOCK_SIZE * (level / 2);
+      this.center.x += this.direction.x * BLOCK_SIZE * (level / 10);
+      this.center.y += this.direction.y * BLOCK_SIZE * (level / 10);
     },
 
     eat: function() {
