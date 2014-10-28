@@ -1,4 +1,24 @@
 .container {
+	position: relative;
 	margin: 0 auto;
-	width: 510px;
+	width: 512px;
+}
+.hide {
+	display: none;
+}
+.btn-start {
+	position: absolute;
+	width: 512px;
+	height: 480px;
+	line-height: 480px;
+	font-size: 26px;
+	text-align: center;
+	cursor: pointer;
+}
+.btn-start:hover {
+	color: green;
+}
+.btn-restart {
+	background: rgba(0, 0, 0, 0.75);
+	transition: all 0.25s ease-in-out;
 }
