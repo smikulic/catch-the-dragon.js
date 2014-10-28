@@ -10,6 +10,7 @@
     this.bodies = createWalls(this).concat(new Player(this));
     this.addDragon();
     this.showScore = document.getElementById("score");
+    this.btnStartGame = document.getElementById("start");
 
     var self = this;
     var tick = function() {
@@ -18,7 +19,11 @@
       requestAnimationFrame(tick);
     };
 
-    tick();
+    this.btnStartGame.addEventListener('click', function () {
+      this.className = "hide";
+
+      tick();
+    });
   };
 
   Game.prototype = {
@@ -148,7 +153,6 @@
     },
 
     collision: function(otherBody) {
-      console.log(otherBody instanceof Dragon)
       if (otherBody instanceof WallBlock) {
         this.die();
       } else if (otherBody instanceof Dragon) {
@@ -194,6 +198,11 @@
       for (var i = 0; i < this.blocks.length; i++) {
         this.game.removeBody(this.blocks[i]);
       }
+      this.game.btnStartGame.innerHTML = "Restart";
+      this.game.btnStartGame.className = "btn-start btn-restart";
+      this.game.btnStartGame.addEventListener('click', function () {
+        location.reload();
+      });
     }
   };
 
